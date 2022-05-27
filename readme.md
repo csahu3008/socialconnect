@@ -35,7 +35,14 @@ current status of working :
         (go ahead and create a new post and allow CHANDRA SHEKHAR to see it in the multi-option field)
         (then login with superuser account you will see the posts by sameer )
 
-    * in this website , when **connect** is clicked in the **connect friends** section ,it only connects the other user from your side not from your side both of you will be mutually connected when the other user **connects** with you from his side .in simpler words we can say ** it's one way connection **
-    soon i'll create notification for when the other clicks on the **connect** the other user will be notified about new reuqest.
-
+    * in this website , when connect is clicked in the connect friends section ,it only connects the other user from your side not from your side both of you will be mutually connected when the other user connects with you from his side .in simpler words we can say  it's one way connection 
     
+    * soon i'll create notification for when the other clicks on the connect the other user will be notified about new reuqest.
+
+CREATED WITH
+* HTML
+* CSS
+* DJANGO
+* JAVASCRIPT
+* BOOTSTRAP
+
