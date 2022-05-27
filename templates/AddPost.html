@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    #form{
+        padding:20px;
+    }
+</style>
+
+<h2>Create New Post </h2>
+
+<form method="post" id="form" class='form-control'>
+        {{form.as_p}}
+
+    {% if allowed_friends %}
+    <label for="allowed_friends" class="text-primary">Who can See This Post :
+        <select class="form-select" id="allowed_friends" multiple aria-label="Who Can See Post">
+            {% for friend in allowed_friends %}
+            <option value="{{friend.id}}">{{friend.name}}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <p class="text text-danger" style="font-size:12px ;">( by default post will be visible to all your friends )</p>
+
+    {% endif %}
+    <div>
+      <input type="submit" id='submit' class="btn btn-success" value="create post">
+    </div>
+</form>
+
+
+
+<script>
+document.getElementById('form').onsubmit = function(e) {
+    e.preventDefault();
+    title=document.getElementById('id_title').value;
+    pic=document.getElementById('id_image').files[0];
+    let formData = new FormData();
+    formData.append("title", title);
+    formData.append("image", pic);
+    formData.append('image', pic, pic.name);
+    formData.append("csrfmiddlewaretoken", "{{csrf_token}}");
+    var allowed_friends = [];
+    for (var option of document.getElementById('allowed_friends').options)
+    {
+        if (option.selected) {
+            allowed_friends.push(option.value);
+        }
+    }
+    console.log(allowed_friends)
+    formData.append('allowed_friends', allowed_friends);
+    axios({
+  method: 'post',
+  url: '{% url "add_post" %}',
+  data: formData,
+  headers: {
+    'content-type': 'multipart/form-data'
+  }
+    }).then(function (response) {
+        // on success
+        alert("Post added successfully")
+        console.log("Success")
+    }).catch(function (error) {
+        // on error 
+        alert("Failed ")
+        console.log("Failed");
+    });
+
+}
+
+</script>
+{% endblock content %}

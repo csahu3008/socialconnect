@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+.all-users{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+.card{
+    margin: 5px;
+}
+@media screen and  (max-width:480px){
+    .all-users{
+        flex-direction: column;
+    }
+}
+
+</style>    
+
+
+<form method="get" >
+
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Search Users</label>
+        <input type="text" placeholder="Enter Mobile | Email | Name" name="q"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">search using email mobile or name.</div>
+      </div>
+
+<input type="submit" class="btn btn-primary" value="Search">
+</form>
+
+ 
+{% if query %}
+   <p class=""> You searched for - {{query}} </p>
+{% endif %}
+
+
+
+
+<div class="all-users">
+
+    <div id="strangers">
+    {% if strangers %}
+    <h1>Strangers</h1>
+    {% for u in strangers %}
+       
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Name :  {{u.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Email : {{u.email}} </h6>
+                <p class="card-text">Phone :  {{u.mobile}}</p>
+                
+                {% if user.is_authenticated %} 
+                <a href="{% url 'profile' u.id %}" class="card-link">View Profile</a>
+                <div>
+                    <input type="button" value="Connect"  class="btn btn-primary user_click" >
+                    <input type="hidden" id="hidden" value="{{u.pk}}"/>
+                </div>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-primary"  >Login to Connect</a>
+                {% endif %}
+
+            </div>
+            </div>
+    
+
+    {% endfor %}
+        {% endif %}
+</div>
+
+<div class="friends">
+    {% if my_friends %}
+    <h1>My Friends</h1>
+    {% for u in my_friends %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Name :  {{u.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Email : {{u.email}} </h6>
+            <p class="card-text">Phone :  {{u.mobile}}</p>
+            <a href="{% url 'profile' u.id %}" class="card-link" >View Profile</a>
+
+            {% if user.is_authenticated %} 
+            <div>
+                <p>You are connected with {{u.name}}</p>
+            </div>
+            {% else %}
+                <input type="button" value="Login to connect" class="btn btn-primary" >
+            {% endif %}
+
+        </div>
+        </div>
+
+    {% endfor %}
+
+    {% endif %}
+</div>
+
+</div>
+
+
+
+<script>
+    let buttons = document.getElementsByClassName('user_click'); // selecting the button
+
+function myFunction(event) { 
+    event.preventDefault()
+    let data = new FormData(); 
+    // data.append("id", 78)  
+    data.append("id", this.nextElementSibling.value)  
+    data.append("csrfmiddlewaretoken", '{{csrf_token}}')
+    
+    axios.post("{% url 'add_friend' %}", data,
+    {
+    // "X-CSRFToken": "{{csrf_token}}", 
+    "content-type": "application/json"
+      }) 
+     .then(
+         res => 
+         {
+         alert("Added as friend");
+        //  var stranger_ele=document.getElementById('strangers');
+         window.location = window.location + '#strangers';
+         window.location.reload();
+
+        } ) 
+     .catch(errors => alert("Not Added as friend")) 
+
+}
+
+for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', myFunction, false);
+}
+
+
+</script>
+
+
+{% endblock content %}

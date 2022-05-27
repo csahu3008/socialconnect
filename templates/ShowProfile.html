@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    #small{
+        padding:5px;
+        margin:2px;
+        background-color: aliceblue;
+    }
+    .card-div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+{% load static %}
+<div class="card-div">
+
+    <div class="card" style="width:40rem;">
+        <div class="card-body">
+            <h5 class="card-title">Name :  {{user.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Email : {{user.email}} </h6>
+        <p class="card-text">Phone :  {{user.mobile}}</p>
+        
+        <h6 class="card-subtitle mb-2 text-muted">mutual friends {{mutual_friends.count}} </h6>
+        {% if mutual_friends %}
+            {% for friend in mutual_friends %}
+                <div class="card-text" id="small">
+                    {{friend.name}}
+                    <a href="{% url 'profile' friend.id %}" class="card-link">View Profile</a>
+
+                </div>
+
+                {% endfor %}
+                {% else %}
+                
+                {% endif %}
+                
+            </div>
+        </div>
+        
+        
+    </div>
+        {% endblock content %}

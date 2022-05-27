@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+{% if form.errors %}
+   {{errors}}
+{% else %}
+{% endif %}
+{% if user.is_authenticated %}
+   {{user.email}}
+{% endif %}
+
+<form method='POST'  class="">
+{{form.as_p}}
+{% csrf_token %}
+<input value='login' class="btn btn-dark" type="submit">
+</form>
+<a  href='{% url "signup" %}' >Signup</a>
+{% endblock content %} 

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+
+.post-flex{
+    display:flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: wrap;
+        
+}
+.card{
+    margin: 10px;
+}
+@media screen and (max-width:480px) {
+    .post-flex{
+    flex-direction: column;
+    }
+}
+
+</style>
+{% load static %}
+    
+<div class="posts">
+
+    {% if posts %}
+    <div class="post-flex">
+    {% for post in posts %}
+
+        <div class="card" style="width: 18rem;">
+            <img src="{{post.image.url}}"  alt="Sorry No Image" >
+            <div class="card-body">
+            <h5 class="card-title"> {{post.title}}</h5>
+            <p class="card-text">Date Posted {{post.date_created|date}} </p>
+            <a href="{% url 'profile' post.user.id %}" class="btn btn-primary">see {{post.user.name}} profile</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+        {% else %}
+        <h1>Sorry No Posts available </h1>
+        {% endif  %}
+</div>
+        {% endblock content %}
