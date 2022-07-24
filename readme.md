@@ -21,20 +21,7 @@ current status of working :
     * uploading of image is not working (due to some heroku error , i'll correct it later) 
       but while adding a new post you have to add Image which is essential without it post will not be saved
     
-    * to check working
-        login with superuser account
-        mobile : 1234567890
-        password : 1234
-        name: CHANDRA SHEKHAR
-        (this can see only the posts which were be posted by the users to whom he is connected and is allowed to see the posts)
-        
-        login with other account:
-        mobile : 0000000000
-        name:sameer
-        password : 1234
-        (go ahead and create a new post and allow CHANDRA SHEKHAR to see it in the multi-option field)
-        (then login with superuser account you will see the posts by sameer )
-
+    
     * in this website , when connect is clicked in the connect friends section ,it only connects the other user from your side not from your side both of you will be mutually connected when the other user connects with you from his side .in simpler words we can say  it's one way connection 
     
     * soon i'll create notification for when the other clicks on the connect the other user will be notified about new reuqest.
